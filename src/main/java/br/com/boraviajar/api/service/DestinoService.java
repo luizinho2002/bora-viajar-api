@@ -1,55 +1,34 @@
 package br.com.boraviajar.api.service;
 
 import br.com.boraviajar.api.model.Destino;
-import org.springframework.stereotype.Service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service 
 public class DestinoService {
-    
-    public List<Destino> listarTodos() {
-        return List.of(
-            new Destino(
-                1L,
-                "Ouro Preto",
-                "Minas Gerais",
-                "Brasil",
-                "Histórico",
-                "Cidade histórica famosa pela arquitetua colonial e barroca."
-            ),
-            new Destino(
-                2L,
-                "Paris",
-                "Île-de-France",
-                "França",
-                "Internacional",
-                "A cidade luz, famosa pela Torre Eiffel e rica cultura mundial."
-            ),
-            new Destino(
-                3L,
-                "Salvador",
-                "Bahia",
-                "Brasil",
-                "Litoral e Histórico",
-                "Primeira capital do Brasil, famosa pelo Pelourinho e culinária marcante."
-            ),
-            new Destino(
-               4L,
-               "Tóquio",
-               "Kanto",
-               "Japão",
-               "Internacional",
-               "Metrópole fascinante que une tecnologia e tradições milenares." 
-            )
-        );
+
+    private final List<Destino> destinos = new ArrayList<>();
+
+    public DestinoService() {
+        destinos.add(new Destino(1L, "Ouro Preto", "Minas Gerais", "Brasil", "Histórico", "Cidade Históirica famosa pela arquitetura colonial e barroca."));
+        destinos.add(new Destino(2L, "Fernando de Noronha", "Pernambuco", "Brasil", "Praia", "Arquipélago famoso por suas praias paradisíacas e vida marinha."));
     }
 
-    // O novo método entra aqui:
+    public List<Destino> listarTodos() {
+        return destinos;
+    }
+
     public Destino buscarPorId(Long id) {
-        return listarTodos().stream()
+        return destinos.stream()
                 .filter(destino -> destino.id().equals(id))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado"));
     }
 }
+
+
