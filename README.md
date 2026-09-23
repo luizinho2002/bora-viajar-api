@@ -7,14 +7,14 @@ API REST desenvolvida em Java com Spring Boot para gestão e consulta de destino
 * **Java 17+**
 * **Spring Boot 3**
 * **Spring Web** (construção de endpoints REST)
-** **Maven** (gerenciador de dependências)
+* **Maven** (gerenciador de dependências)
 
-** 📌 Funcionalidades Atuais
+## 📌 Funcionalidades Atuais
 
-- [x] **Listar todos os destinos:** Retorna a lista completa de destinos cadastrados.
-= [X] **Buscar destino por ID:** Retorna as informações datalhadas de um destino específico através do seu identificador.
+- [x] **Listar todos os destinos:** Retorna a lista completa de destinos cadastrados.  
+- [X] **Buscar destino por ID:** Retorna as informações datalhadas de um destino específico através do seu identificador.
 
-** 🛠️ Endpoint da API
+## 🛠️ Endpoint da API
 
 ```text
 | Método | Rota | Descrição | Exemplo de Uso |
