@@ -29,6 +29,11 @@ public class DestinoService {
                 .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado"));
     }
+
+    public Destino salvar(Destino destino) {
+        destinos.add(destino);
+        return destino;
+    }
 }
 
 

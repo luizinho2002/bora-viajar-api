@@ -2,11 +2,7 @@ package br.com.boraviajar.api.controller;
 
 import br.com.boraviajar.api.model.Destino;
 import br.com.boraviajar.api.service.DestinoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable; 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +17,17 @@ public class DestinoController {
     }
 
     @GetMapping
-    public List<Destino> listarDestinos() {
+    public List<Destino> listarTodos() {
         return destinoService.listarTodos();
     }
 
     @GetMapping("/{id}")
     public Destino buscarPorId(@PathVariable Long id) {
         return destinoService.buscarPorId(id);
+    }
+
+    @PostMapping
+    public Destino salvar(@RequestBody Destino destino) {
+        return destinoService.salvar(destino);
     }
 }
