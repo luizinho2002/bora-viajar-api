@@ -2,7 +2,9 @@ package br.com.boraviajar.api.controller;
 
 import br.com.boraviajar.api.model.Destino;
 import br.com.boraviajar.api.service.DestinoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,13 +30,15 @@ public class DestinoController {
     }
 
     @PostMapping
-    public Destino salvar(@RequestBody Destino destino) {
-        return destinoService.salvar(destino);
+    public ResponseEntity<Destino> salvar(@Valid @RequestBody Destino destino) {
+        Destino novoDestino = destinoService.salvar(destino);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoDestino);
     }
 
     @PutMapping("/{id}")
-    public Destino atualizar(@PathVariable Long id, @RequestBody Destino destino) {
-        return destinoService.atualizar(id, destino);
+    public ResponseEntity<Destino> atualizar(@PathVariable Long id, @Valid @RequestBody Destino destino) {
+        Destino destinoAtualizado = destinoService.atualizar(id, destino);
+        return ResponseEntity.ok(destinoAtualizado);
     }
 
     @DeleteMapping("/{id}")

@@ -1,62 +1,50 @@
 package br.com.boraviajar.api.service;
 
 import br.com.boraviajar.api.model.Destino;
-
+import br.com.boraviajar.api.repository.DestinoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Service 
+@Service
 public class DestinoService {
 
-    private final List<Destino> destinos = new ArrayList<>();
+    private final DestinoRepository destinoRepository;
 
-    public DestinoService() {
-        destinos.add(new Destino(1L, "Ouro Preto", "Minas Gerais", "Brasil", "Histórico", "Cidade Históirica famosa pela arquitetura colonial e barroca."));
-        destinos.add(new Destino(2L, "Fernando de Noronha", "Pernambuco", "Brasil", "Praia", "Arquipélago famoso por suas praias paradisíacas e vida marinha."));
+    // Injeção de dependência via construtor
+    public DestinoService(DestinoRepository destinoRepository) {
+        this.destinoRepository = destinoRepository;
     }
 
     public List<Destino> listarTodos() {
-        return destinos;
+        return destinoRepository.findAll();
     }
 
     public Destino buscarPorId(Long id) {
-        return destinos.stream()
-                .filter(destino -> destino.id().equals(id))
-                .findFirst()
+        return destinoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado"));
     }
 
     public Destino salvar(Destino destino) {
-        destinos.add(destino);
-        return destino;
+        return destinoRepository.save(destino);
     }
 
     public Destino atualizar(Long id, Destino destinoAtualizado) {
         Destino destinoExistente = buscarPorId(id);
 
-        destinos.remove(destinoExistente);
+        destinoExistente.setNome(destinoAtualizado.getNome());
+        destinoExistente.setEstadoOuRegiao(destinoAtualizado.getEstadoOuRegiao());
+        destinoExistente.setPais(destinoAtualizado.getPais());
+        destinoExistente.setCategoria(destinoAtualizado.getCategoria());
+        destinoExistente.setDescricao(destinoAtualizado.getDescricao());
 
-        Destino novoDestino = new Destino(
-            id,
-            destinoAtualizado.nome(),
-            destinoAtualizado.estadoOuRegiao(),
-            destinoAtualizado.pais(),
-            destinoAtualizado.categoria(),
-            destinoAtualizado.descricao()
-        );
-
-        destinos.add(novoDestino);
-        return novoDestino;
+        return destinoRepository.save(destinoExistente);
     }
 
     public void deletar(Long id) {
         Destino destino = buscarPorId(id);
-        destinos.remove(destino);
+        destinoRepository.delete(destino);
     }
 }
-
-
