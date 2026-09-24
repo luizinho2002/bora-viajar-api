@@ -34,6 +34,11 @@ public class DestinoService {
         destinos.add(destino);
         return destino;
     }
+
+    public void deletar(Long id) {
+        Destino destino = buscarPorId(id);
+        destinos.remove(destino);
+    }
 }
 
 
