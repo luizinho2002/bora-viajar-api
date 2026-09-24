@@ -35,6 +35,24 @@ public class DestinoService {
         return destino;
     }
 
+    public Destino atualizar(Long id, Destino destinoAtualizado) {
+        Destino destinoExistente = buscarPorId(id);
+
+        destinos.remove(destinoExistente);
+
+        Destino novoDestino = new Destino(
+            id,
+            destinoAtualizado.nome(),
+            destinoAtualizado.estadoOuRegiao(),
+            destinoAtualizado.pais(),
+            destinoAtualizado.categoria(),
+            destinoAtualizado.descricao()
+        );
+
+        destinos.add(novoDestino);
+        return novoDestino;
+    }
+
     public void deletar(Long id) {
         Destino destino = buscarPorId(id);
         destinos.remove(destino);

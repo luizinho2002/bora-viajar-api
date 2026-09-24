@@ -32,6 +32,11 @@ public class DestinoController {
         return destinoService.salvar(destino);
     }
 
+    @PutMapping("/{id}")
+    public Destino atualizar(@PathVariable Long id, @RequestBody Destino destino) {
+        return destinoService.atualizar(id, destino);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Long id) {
